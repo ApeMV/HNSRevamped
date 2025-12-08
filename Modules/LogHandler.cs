@@ -3,9 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using HarmonyLib;
-using System.Linq;
-using System.Collections.Generic;
 using LogLevel = BepInEx.Logging.LogLevel;
 
 namespace HNSRevamped;

@@ -1,6 +1,5 @@
 ﻿using System;
 using Il2CppSystem.Collections.Generic;
-using HarmonyLib;
 using UnityEngine;
 
 using Object = UnityEngine.Object;
@@ -531,6 +530,23 @@ namespace HNSRevamped
             __instance.MinusBtn.SetInteractable(true);
 	    	__instance.PlusBtn.SetInteractable(true);
             return false;
+        }
+    }
+    [HarmonyPatch(typeof(ChatController), nameof(ChatController.Update))]
+    public static class FixDarkThemeForSearchBar
+    {
+        public static FreeChatInputField InputField;
+        public static void Postfix()
+        {
+            if (!GameSettingMenu.Instance) return;
+            FreeChatInputField field = InputField;
+
+            if (field != null)
+            {
+                field.background.color = new Color32(40, 40, 40, byte.MaxValue);
+                field.textArea.compoText.Color(Color.white);
+                field.textArea.outputText.color = Color.white;
+            }
         }
     }
 }

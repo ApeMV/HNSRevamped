@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
-using HarmonyLib;
 using UnityEngine;
-using System.Collections.Generic;
 
 // https://github.com/tukasa0001/TownOfHost/blob/main/Modules/OptionHolder.cs
 namespace HNSRevamped

@@ -1,9 +1,7 @@
-﻿using HarmonyLib;
-using Hazel;
+﻿using Hazel;
 using InnerNet;
 using UnityEngine;
 using System;
-using System.Linq;
 using AmongUs.GameOptions;
 
 using Object = UnityEngine.Object;

@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using AmongUs.GameOptions;
 using Hazel;
 using UnityEngine;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using InnerNet;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System;
@@ -19,6 +18,14 @@ namespace HNSRevamped;
 
 public static class Utils
 {
+    private static readonly DateTime Epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private static readonly DateTime StartTime = DateTime.UtcNow;
+    private static readonly long EpochStartSeconds = (long)(StartTime - Epoch).TotalSeconds;
+    private static readonly Stopwatch Stopwatch = Stopwatch.StartNew();
+
+    public static long TimeStamp => EpochStartSeconds + (long)Stopwatch.Elapsed.TotalSeconds;
+
+    public static bool IsLobby => AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Joined;
     public static bool InGame => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started;
     public static bool isHideNSeek => GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek;
 
@@ -96,5 +103,52 @@ public static class Utils
         }
         else
         return optionItem.GetName();
+    }
+
+    public static string GetRegionName(IRegionInfo region = null)
+    {
+        region ??= ServerManager.Instance.CurrentRegion;
+
+        string name = region.Name;
+
+        if (AmongUsClient.Instance.NetworkMode != NetworkModes.OnlineGame)
+        {
+            name = "Local Game";
+            return name;
+        }
+
+        if (region.PingServer.EndsWith("among.us", StringComparison.Ordinal))
+        {
+            // Official servers
+            name = name switch
+            {
+                "North America" => "NA",
+                "Europe" => "EU",
+                "Asia" => "AS",
+                _ => name
+            };
+
+            return name;
+        }
+
+        string ip = region.Servers.FirstOrDefault()?.Ip ?? string.Empty;
+
+        if (ip.Contains("aumods.us", StringComparison.Ordinal) || ip.Contains("duikbo.at", StringComparison.Ordinal))
+        {
+            // Modded Servers
+            if (ip.Contains("au-eu"))
+                name = "MEU";
+            else if (ip.Contains("au-as"))
+                name = "MAS";
+            else
+                name = "MNA";
+
+            return name;
+        }
+
+        if (name.Contains("Niko", StringComparison.OrdinalIgnoreCase))
+            name = name.Replace("233(", "-").TrimEnd(')');
+
+        return name;
     }
 }

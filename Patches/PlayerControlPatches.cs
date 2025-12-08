@@ -1,5 +1,4 @@
 ﻿using AmongUs.Data;
-using HarmonyLib;
 using AmongUs.GameOptions;
 using InnerNet;
 

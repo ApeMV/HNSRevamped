@@ -1,6 +1,4 @@
-﻿using HarmonyLib;
-
-namespace HNSRevamped;
+﻿namespace HNSRevamped;
 
 [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
 public static class GameStartManagerUpdatePatch

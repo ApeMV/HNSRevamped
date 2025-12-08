@@ -1,12 +1,9 @@
-using HarmonyLib;
 using InnerNet;
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 // https://github.com/EnhancedNetwork/TownofHost-Enhanced/blob/main/Modules/BanManager.cs

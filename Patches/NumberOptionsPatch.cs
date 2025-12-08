@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using AmongUs.GameOptions;
+﻿using AmongUs.GameOptions;
 
 namespace HNSRevamped;
 
